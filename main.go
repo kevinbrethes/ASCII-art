@@ -50,7 +50,6 @@ func returnCharacterLine(text []string, ascii []string) []string { //return an a
 			}
 		}
 	}
-
 	return lineToReturn
 }
 
