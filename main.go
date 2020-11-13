@@ -1,3 +1,7 @@
+// In this project we want to convert the passed arguments into an ascii art
+// We'll use the file "standard.txt" which contain the ASCII table
+// Each characters is composed of 8 lines
+
 package main
 
 import (
@@ -47,6 +51,8 @@ func printTextInAscii(text []string, ascii []string) {
 		}
 	}
 
+	//the "characters" array contain each line of each characters
+
 	for i := 0; i < 8; i++ {
 		fmt.Print(characters[i])
 		j := 8
@@ -54,21 +60,19 @@ func printTextInAscii(text []string, ascii []string) {
 			fmt.Print(characters[i+j])
 			j += 8
 		}
-		j = 0
 		fmt.Println()
 	}
-
 }
 
 func main() {
-	text := os.Args[1:] //take all the parameters
+	arguments := os.Args[1:] //take all the parameters
 
-	if len(text) == 0 { //handling error
+	if len(arguments) == 0 { //handling "no arguments" error
 		fmt.Println("You didn't give any arguments !")
 		return
 	}
 
-	for _, val := range text { //handling error
+	for _, val := range arguments { //handling "non-valid character" error
 		for i := range val {
 			if val[i] < 32 || val[i] > 126 {
 				fmt.Println("You used a non-valid character.")
@@ -78,9 +82,9 @@ func main() {
 	}
 
 	var textWithSpaces []string
-	for i, val := range text { //add a space between each arguments
+	for i, val := range arguments { //add a space between each arguments
 		textWithSpaces = append(textWithSpaces, val)
-		if i < len(text) {
+		if i < len(arguments)-1 {
 			textWithSpaces = append(textWithSpaces, " ")
 		}
 	}
