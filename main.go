@@ -67,27 +67,32 @@ func printTextInAscii(text []string, ascii []string) {
 	}
 }
 
-func backlineSupport(textWithSpaces []string) [][]string {
+func backlineSupport(textWithSpaces []string) [][]string { //handle \n
 	var finalText [][]string
 	textToAdd := ""
 	var arrayToAdd []string
 	for _, sentence := range textWithSpaces {
-		for i := 1; i < len(sentence)-1; i++ {
-			if sentence[i] == '\\' && sentence[i+1] == 'n' {
+		if len(sentence) > 2 {
+			for i := 1; i < len(sentence)-1; i++ {
+				if sentence[i] == '\\' && sentence[i+1] == 'n' {
+					arrayToAdd = append(arrayToAdd, textToAdd)
+					finalText = append(finalText, arrayToAdd)
+					textToAdd = ""
+					arrayToAdd = nil
+				} else if sentence[i-1] != '\\' && sentence[i] != 'n' {
+					if i == 1 {
+						textToAdd += string(sentence[i-1])
+					}
+					textToAdd += string(sentence[i])
+				}
+			}
+			if sentence[len(sentence)-1] != 'n' && sentence[len(sentence)-2] != '\\' {
+				textToAdd += string(sentence[len(sentence)-1])
 				arrayToAdd = append(arrayToAdd, textToAdd)
 				finalText = append(finalText, arrayToAdd)
-				textToAdd = ""
-				arrayToAdd = nil
-			} else if sentence[i-1] != '\\' && sentence[i] != 'n' {
-				if i == 1 {
-					textToAdd += string(sentence[i-1])
-				}
-				textToAdd += string(sentence[i])
 			}
-		}
-		if sentence[len(sentence)-1] != 'n' && sentence[len(sentence)-2] != '\\' {
-			textToAdd += string(sentence[len(sentence)-1])
-			arrayToAdd = append(arrayToAdd, textToAdd)
+		} else if sentence != "\n" {
+			arrayToAdd = append(arrayToAdd, sentence)
 			finalText = append(finalText, arrayToAdd)
 		}
 	}
