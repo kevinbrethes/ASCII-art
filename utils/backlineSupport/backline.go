@@ -14,7 +14,12 @@ func BacklineErrorFix(text string) string { //fix the error when the args start 
 func BacklineSupport(text string) []string { //seperate the text into an array if there is a "\n"
 	var seperateWords []string
 
-	if len(text) == 1 && text[0] == ' ' { //avoid the index error
+	if len(text) == 1 { //avoid the index error
+		seperateWords = append(seperateWords, text)
+		return seperateWords
+	}
+
+	if text == "\\n" { //avoid the backline error
 		seperateWords = append(seperateWords, " ")
 		return seperateWords
 	}

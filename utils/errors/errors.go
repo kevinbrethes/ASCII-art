@@ -1,9 +1,18 @@
 package errors
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func noArguments(args []string) bool { //handling "no arguments" error
 	if len(args) == 0 {
+		return true
+	}
+	return false
+}
+
+func manyArguments(args []string) bool {
+	if len(args) > 1 {
 		return true
 	}
 	return false
@@ -27,6 +36,9 @@ func HandlingError(args []string) bool {
 		return true
 	case invalidCharacter(args):
 		fmt.Println("You used a non-valid character.")
+		return true
+	case manyArguments(args):
+		fmt.Println("You have given too many arguments !")
 		return true
 	default:
 		return false

@@ -34,25 +34,15 @@ func scanLines(path string) ([]string, error) { //put each lines of the txt file
 	return lines, nil
 }
 
-func addSpacesBetweenArguments(args []string) string {
-	textWithSpaces := ""
-	for i, val := range args {
-		textWithSpaces += val
-		if i < len(args)-1 {
-			textWithSpaces += " "
-		}
+func main() {
+	if errors.HandlingError(os.Args[1:]) { //stop the program if an error occured
+		return
 	}
 
-	textWithSpaces = backline.BacklineErrorFix(textWithSpaces)
+	text := os.Args[1]
 
-	return textWithSpaces
-}
-
-func main() {
-	arguments := os.Args[1:] //take all the parameters
-
-	if errors.HandlingError(arguments) { //stop the program if an error occured
-		return
+	if text == "\\n" { //avoid the backline error
+		text = " "
 	}
 
 	lines, err := scanLines("./standard.txt") //put each lines of the txt file in the array "lines"
@@ -60,8 +50,6 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-
-	text := addSpacesBetweenArguments(arguments) //text is a string type (composed of each arguments)
 
 	textArray := backline.BacklineSupport(text)
 
